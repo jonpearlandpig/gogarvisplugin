@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { API } from '@/App';
+import { API, useAuth } from '@/App';
 import { 
     Database, 
     FileText, 
-    Layers, 
-    Activity,
+    Layers,
     Shield,
     Link2,
     ArrowRight,
-    Zap
+    Zap,
+    Bot,
+    Palette
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
