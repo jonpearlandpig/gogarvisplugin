@@ -1,0 +1,155 @@
+{
+  "design_system": {
+    "name": "GoGarvis Sovereign Architecture",
+    "aesthetic": "Brutal Minimalist / Industrial / High-Contrast",
+    "theme_strategy": "Dark Mode Default (Void Black)",
+    "principles": [
+      "Function over Form: No decoration without purpose.",
+      "Raw Data: Expose the grid, expose the structure.",
+      "High Contrast: #FFFFFF on #000000. No soft greys.",
+      "Monospace Dominance: Headings feel like code/terminal.",
+      "Sharp Edges: 0px Border Radius everywhere."
+    ]
+  },
+  "typography": {
+    "font_family": {
+      "headings": "JetBrains Mono, monospace",
+      "body": "Manrope, sans-serif",
+      "mono": "JetBrains Mono, monospace"
+    },
+    "scale": {
+      "h1": "text-4xl md:text-6xl font-bold tracking-tighter uppercase",
+      "h2": "text-3xl md:text-4xl font-bold tracking-tight uppercase",
+      "h3": "text-xl md:text-2xl font-semibold tracking-tight",
+      "body": "text-base leading-relaxed",
+      "small": "text-sm font-mono text-muted-foreground",
+      "label": "text-xs font-mono uppercase tracking-widest text-muted-foreground"
+    },
+    "rules": [
+      "Use JetBrains Mono for all Headings and Data Values.",
+      "Use Manrope for long-form text (Documentation).",
+      "All labels and buttons must be UPPERCASE.",
+      "Line-height should be tight (1.1) for headings."
+    ]
+  },
+  "colors": {
+    "palette": {
+      "background": "#050505",
+      "foreground": "#FFFFFF",
+      "card": "#0A0A0A",
+      "card_foreground": "#FFFFFF",
+      "popover": "#0A0A0A",
+      "popover_foreground": "#FFFFFF",
+      "primary": "#FF4500",
+      "primary_foreground": "#FFFFFF",
+      "secondary": "#1A1A1A",
+      "secondary_foreground": "#FFFFFF",
+      "muted": "#1A1A1A",
+      "muted_foreground": "#888888",
+      "accent": "#FF4500",
+      "accent_foreground": "#FFFFFF",
+      "destructive": "#FF0000",
+      "destructive_foreground": "#FFFFFF",
+      "border": "#333333",
+      "input": "#1A1A1A",
+      "ring": "#FF4500"
+    },
+    "usage": {
+      "primary": "Use for active states, cursors, and critical alerts (Enforcement Layer).",
+      "background": "Void Black (#050505). Never pure black (#000000) to allow shadows if absolutely needed, but prefer flat.",
+      "border": "Dark Steel (#333333). Used heavily for grid lines.",
+      "text": "Pure White (#FFFFFF) for primary content. Grey (#888888) for metadata."
+    }
+  },
+  "layout": {
+    "grid_system": "Bento Grid / Modular",
+    "spacing": {
+      "container_padding": "p-6 md:p-12",
+      "element_gap": "gap-4 md:gap-8",
+      "section_spacing": "py-16 md:py-24"
+    },
+    "containers": {
+      "card": "bg-card border border-border p-6 rounded-none",
+      "panel": "bg-background border-r border-border h-full",
+      "dashboard_grid": "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-px bg-border"
+    },
+    "rules": [
+      "Use 'gap-px' with a background color of 'border' to create visible grid lines between items.",
+      "Sidebar navigation is fixed on the left (w-64).",
+      "Dashboard widgets should fill their grid cells completely."
+    ]
+  },
+  "components": {
+    "buttons": {
+      "default": "bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 rounded-none uppercase font-mono text-sm tracking-wider transition-colors",
+      "outline": "border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 rounded-none uppercase font-mono text-sm tracking-wider",
+      "ghost": "hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 rounded-none uppercase font-mono text-sm tracking-wider"
+    },
+    "inputs": {
+      "default": "flex h-10 w-full rounded-none border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+    },
+    "cards": {
+      "wrapper": "rounded-none border border-border bg-card text-card-foreground shadow-none",
+      "header": "flex flex-col space-y-1.5 p-6",
+      "title": "text-2xl font-semibold leading-none tracking-tight font-mono uppercase",
+      "content": "p-6 pt-0"
+    },
+    "badges": {
+      "default": "inline-flex items-center rounded-none border border-transparent bg-primary px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-primary-foreground uppercase font-mono"
+    }
+  },
+  "visual_enhancers": {
+    "textures": [
+      "Scanlines: repeating-linear-gradient(0deg, transparent, transparent 2px, #000000 3px)",
+      "Noise: url('/noise.png') opacity-5"
+    ],
+    "effects": [
+      "Glow: drop-shadow-[0_0_10px_rgba(255,69,0,0.5)] for active elements only.",
+      "Glitch: CSS animation on hover for logos/titles."
+    ],
+    "icons": "Lucide React (Stroke width 1.5px, sharp edges if possible)"
+  },
+  "motion": {
+    "type": "Mechanical / Instant",
+    "duration": "duration-100",
+    "easing": "ease-linear",
+    "rules": [
+      "Avoid bouncy springs.",
+      "Use simple fades or slides.",
+      "Hover states should be instant or very fast (100ms)."
+    ]
+  },
+  "image_urls": {
+    "hero_background": "https://images.unsplash.com/photo-1764449892485-ba74632add94?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "architecture_diagram_bg": "https://images.unsplash.com/photo-1575388902449-6bca946ad549?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "server_texture": "https://images.unsplash.com/photo-1767462315183-0feb9ab9f3f6?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "logo_placeholder": "https://via.placeholder.com/150x50?text=GOGARVIS"
+  },
+  "instructions_to_main_agent": [
+    "1. INSTALL FONTS: Add '@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Manrope:wght@400;600&display=swap');' to index.css.",
+    "2. CONFIGURE TAILWIND: Update tailwind.config.js to use the colors and fonts defined above. Set borderRadius to '0px'.",
+    "3. SHADCN OVERRIDE: Go into /components/ui and remove all 'rounded-md', 'rounded-lg', 'rounded-sm' classes. Replace with 'rounded-none'.",
+    "4. LAYOUT: Build the 'Architecture' page using React Flow or a custom SVG diagram overlaid on the 'architecture_diagram_bg'.",
+    "5. CHAT: The GARVIS AI chat should look like a terminal window (Green/Orange text on Black).",
+    "6. DOCS: The documentation browser should look like a file system explorer (Tree view on left, content on right).",
+    "7. DATA-TESTID: Ensure every interactive element has a data-testid attribute."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters (12-24px blur) ONLY for overlays, not main cards.",
+    "You MUST NOT apply universal transition. Eg: transition: all. This results in breaking transforms.",
+    "You MUST NOT center align the app container.",
+    "Always use modern button styles like pill-shaped, or sharp button with interaction animations & color relevant to the app style.",
+    "NEVER: use AI assistant Emoji characters like 🤖🧠 etc for icons.",
+    "Every interaction needs micro-animations - hover states, transitions.",
+    "Use 2-3x more spacing than feels comfortable.",
+    "Subtle grain textures, noise overlays, custom cursors, selection states, and loading animations: separates good from extraordinary.",
+    "Main agent relies on these image URLs. Missing categories = main agent will use placeholder text which is FORBIDDEN.",
+    "Prioritize using pre-existing components from src/components/ui when applicable.",
+    "Components MUST use named exports.",
+    "Pages MUST use default exports.",
+    "Use 'sonner' for toasts."
+  ]
+}
