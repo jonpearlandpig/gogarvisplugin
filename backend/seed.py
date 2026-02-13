@@ -78,90 +78,473 @@ COMPONENTS = [
     {"name": "AUDIT & EVENT LEDGER", "description": "Immutable, Append-Only Truth Record", "status": "active", "layer": 7, "key_functions": ["Immutable records", "Decision logging", "Routing logs", "Enforcement logs"]},
 ]
 
-# ============== CANONICAL PIG PEN OPERATORS ==============
-# These are FROZEN - only sovereign (TSID-0001) can modify
+# ============== OFFICIAL 33 CANONICAL PIG PEN OPERATORS ==============
+# These are FROZEN - only sovereign (TSID-0001 / jonpearlandpig@gmail.com) can modify
 # is_canonical=True marks these as protected
 
 PIGPEN_OPERATORS = [
-    # SOVEREIGN OVERSIGHT
-    {"tai_d": "TSID-0001", "name": "Jonathan Hartman (Nathan Jon)", "capabilities": "Founder / Architect Sovereign", "role": "System architecture, final arbitration, registry versioning", "authority": "Sovereign override with recorded justification", "status": "LOCKED", "category": "Sovereign Oversight", "decision_weight": 5, "is_canonical": True},
-    
-    # EXECUTIVE & ARCHITECTURE
-    {"tai_d": "FP-JH-001", "name": "Jon Hartman", "capabilities": "Founder & Architect", "role": "Leads sacred IP creation, show architecture, and system vision", "authority": "Decision Weight: 5", "status": "LOCKED", "category": "Executive & Architecture", "decision_weight": 5, "is_canonical": True},
-    {"tai_d": "FP-TM-002", "name": "Trey Mills", "capabilities": "Business Strategist / Deal Architect", "role": "Designs monetization systems, structures partnerships, enforces downside protection", "authority": "Decision Weight: 5", "status": "LOCKED", "category": "Executive & Architecture", "decision_weight": 5, "is_canonical": True},
-    {"tai_d": "FP-MH-003", "name": "Marty Hillsdale", "capabilities": "Operational Architect", "role": "Translates creative intent into repeatable operational systems and SOPs", "authority": "Decision Weight: 4", "status": "LOCKED", "category": "Executive & Architecture", "decision_weight": 4, "is_canonical": True},
-    
-    # CREATIVE ENGINE
-    {"tai_d": "FP-NT-004", "name": "Naomi Top", "capabilities": "Creative Director / Aesthetic Architect", "role": "Oversees story cohesion and visual resonance across all creative outputs", "authority": "Decision Weight: 4", "status": "LOCKED", "category": "Creative Engine", "decision_weight": 4, "is_canonical": True},
-    {"tai_d": "FP-VC-005", "name": "Vienna Cray", "capabilities": "Senior Illustrator / Iconographer", "role": "Develops visual symbols and icon systems", "authority": "Decision Weight: 3", "status": "LOCKED", "category": "Creative Engine", "decision_weight": 3, "is_canonical": True},
-    {"tai_d": "FP-ES-006", "name": "Ellie Summers", "capabilities": "Junior Concept Artist", "role": "Expands visual language and explores stylistic possibilities", "authority": "Decision Weight: 2", "status": "LOCKED", "category": "Creative Engine", "decision_weight": 2, "is_canonical": True},
-    {"tai_d": "FP-FM-007", "name": "Fred Mann", "capabilities": "Lighting Designer / Motion Mapper", "role": "Translates emotion into light and motion arcs", "authority": "Decision Weight: 3", "status": "LOCKED", "category": "Creative Engine", "decision_weight": 3, "is_canonical": True},
-    {"tai_d": "FP-RH-008", "name": "Rolondo 'Rolo' Harrison", "capabilities": "Production Designer / Reality Translator", "role": "Converts conceptual designs into physical, tour-ready environments", "authority": "Decision Weight: 3", "status": "LOCKED", "category": "Creative Engine", "decision_weight": 3, "is_canonical": True},
-    {"tai_d": "FP-ML-009", "name": "Mo Landing", "capabilities": "Choreography Consultant / Motion Flow", "role": "Designs movement language and rhythmic flow", "authority": "Decision Weight: 2", "status": "LOCKED", "category": "Creative Engine", "decision_weight": 2, "is_canonical": True},
-    {"tai_d": "FP-DG-010", "name": "Dia Garcia", "capabilities": "Costume Design Consultant / Silhouette Keeper", "role": "Crafts wardrobe systems that communicate sacred meaning", "authority": "Decision Weight: 3", "status": "LOCKED", "category": "Creative Engine", "decision_weight": 3, "is_canonical": True},
-    {"tai_d": "FP-TS-011", "name": "Turner Smith", "capabilities": "Audio Creative Director / Music & Legacy Lead", "role": "Oversees music development and sonic language for all IP", "authority": "Decision Weight: 4", "status": "LOCKED", "category": "Creative Engine", "decision_weight": 4, "is_canonical": True},
-    {"tai_d": "FP-JJ-012", "name": "Jack Jones", "capabilities": "Social Media Director / Story in Motion", "role": "Directs digital storytelling across all platforms", "authority": "Decision Weight: 3", "status": "LOCKED", "category": "Creative Engine", "decision_weight": 3, "is_canonical": True},
-    {"tai_d": "FP-LM-013", "name": "Leah Monroe", "capabilities": "Guest Experience Strategist / Atmosphere Keeper", "role": "Designs and audits guest journey touchpoints", "authority": "Decision Weight: 3", "status": "LOCKED", "category": "Creative Engine", "decision_weight": 3, "is_canonical": True},
-    {"tai_d": "FP-AR-027", "name": "The Architect", "capabilities": "Story Architect / Structural Designer", "role": "Builds and balances story structure, pacing, and narrative flow", "authority": "Decision Weight: 4", "status": "LOCKED", "category": "Creative Engine", "decision_weight": 4, "is_canonical": True},
-    {"tai_d": "FP-TV-028", "name": "The Voice", "capabilities": "Dialogue & Character Writer", "role": "Shapes authentic voices and interpersonal tone for characters", "authority": "Decision Weight: 3", "status": "LOCKED", "category": "Creative Engine", "decision_weight": 3, "is_canonical": True},
-    {"tai_d": "FP-VI-029", "name": "The Visualizer", "capabilities": "Scene Language & Imagery Writer", "role": "Transforms narrative beats into cinematic language", "authority": "Decision Weight: 3", "status": "LOCKED", "category": "Creative Engine", "decision_weight": 3, "is_canonical": True},
-    {"tai_d": "FP-PO-030", "name": "The Polisher", "capabilities": "Refinement & Cohesion Editor", "role": "Edits, harmonizes, and tightens language and structure", "authority": "Decision Weight: 3", "status": "LOCKED", "category": "Creative Engine", "decision_weight": 3, "is_canonical": True},
-    {"tai_d": "FP-OR-031", "name": "The Oracle", "capabilities": "Theme & Scripture Integration Writer", "role": "Weaves sacred themes and biblical truth into IP", "authority": "Decision Weight: 4", "status": "LOCKED", "category": "Creative Engine", "decision_weight": 4, "is_canonical": True},
-    
-    # SYSTEMS & OPS
-    {"tai_d": "FP-MO-014", "name": "Miles Okada", "capabilities": "Tech Product Lead", "role": "Leads technical product architecture and platform reliability", "authority": "Decision Weight: 4", "status": "LOCKED", "category": "Systems & Ops", "decision_weight": 4, "is_canonical": True},
-    {"tai_d": "FP-KJ-015", "name": "Kay Jing", "capabilities": "Flight Controller / Operations Director", "role": "Oversees scheduling, resource allocation, and deliverables", "authority": "Decision Weight: 4", "status": "LOCKED", "category": "Systems & Ops", "decision_weight": 4, "is_canonical": True},
-    {"tai_d": "FP-FC-016", "name": "Fory Cornier", "capabilities": "Technical Director", "role": "Unifies lighting, audio, automation, and media systems", "authority": "Decision Weight: 3", "status": "LOCKED", "category": "Systems & Ops", "decision_weight": 3, "is_canonical": True},
-    {"tai_d": "FP-LF-017", "name": "Levi Foster", "capabilities": "Risk Analyst / Devil's Advocate", "role": "Stress-tests creative, financial, and operational systems", "authority": "Decision Weight: 4", "status": "LOCKED", "category": "Systems & Ops", "decision_weight": 4, "is_canonical": True},
-    {"tai_d": "FP-WS-018", "name": "Will Stats", "capabilities": "P&L Template Architect", "role": "Develops usable financial models and margin-tested P&Ls", "authority": "Decision Weight: 4", "status": "LOCKED", "category": "Systems & Ops", "decision_weight": 4, "is_canonical": True},
-    {"tai_d": "FP-OM-019", "name": "Otto Matic", "capabilities": "Automation & Export Specialist", "role": "Automates workflows and finalizes file exports", "authority": "Decision Weight: 2", "status": "LOCKED", "category": "Systems & Ops", "decision_weight": 2, "is_canonical": True},
-    
-    # GROWTH & COMMERCIAL
-    {"tai_d": "FP-HL-020", "name": "Harper Lane", "capabilities": "Marketing & Distribution Strategist", "role": "Converts creative output into audience growth", "authority": "Decision Weight: 3", "status": "LOCKED", "category": "Growth & Commercial", "decision_weight": 3, "is_canonical": True},
-    {"tai_d": "FP-SR-021", "name": "Sofia Reyes", "capabilities": "Partnership Development Lead", "role": "Develops and manages partnerships and brand alliances", "authority": "Decision Weight: 3", "status": "LOCKED", "category": "Growth & Commercial", "decision_weight": 3, "is_canonical": True},
-    {"tai_d": "FP-GF-022", "name": "Grant Fields", "capabilities": "Partnerships & Sponsorships Strategist", "role": "Secures sponsorships and builds brand partnerships", "authority": "Decision Weight: 3", "status": "LOCKED", "category": "Growth & Commercial", "decision_weight": 3, "is_canonical": True},
-    {"tai_d": "FP-RC-023", "name": "Riley Cross", "capabilities": "Sales Enablement Lead", "role": "Designs sales collateral and conversion funnels", "authority": "Decision Weight: 3", "status": "LOCKED", "category": "Growth & Commercial", "decision_weight": 3, "is_canonical": True},
-    {"tai_d": "FP-MC-024", "name": "Maya Chen", "capabilities": "Client Success Lead", "role": "Designs onboarding, training, and retention systems", "authority": "Decision Weight: 3", "status": "LOCKED", "category": "Growth & Commercial", "decision_weight": 3, "is_canonical": True},
-    {"tai_d": "FP-SR-025", "name": "Sam Rivers", "capabilities": "Operations Coordinator", "role": "Maintains operational cadence through scheduling", "authority": "Decision Weight: 3", "status": "LOCKED", "category": "Growth & Commercial", "decision_weight": 3, "is_canonical": True},
-    {"tai_d": "FP-CW-026", "name": "Carmen Wade", "capabilities": "Commercial Legal Advisor", "role": "Manages contracts, compliance, and commercial law", "authority": "Decision Weight: 4", "status": "LOCKED", "category": "Growth & Commercial", "decision_weight": 4, "is_canonical": True},
-    
-    # DATA & INTEGRITY SYSTEMS
-    {"tai_d": "FP-ET-027", "name": "Eli Tran", "capabilities": "Data & Insights Analyst", "role": "Converts performance metrics into narrative insight", "authority": "Decision Weight: 3", "status": "LOCKED", "category": "Data & Integrity", "decision_weight": 3, "is_canonical": True},
-    {"tai_d": "FP-LS-028", "name": "Luce Smith", "capabilities": "Audience Architect", "role": "Designs audience growth strategies", "authority": "Decision Weight: 3", "status": "LOCKED", "category": "Data & Integrity", "decision_weight": 3, "is_canonical": True},
-    {"tai_d": "FP-BP-029", "name": "Bob Parker", "capabilities": "Financial Model Builder", "role": "Builds forecasting and variance models", "authority": "Decision Weight: 4", "status": "LOCKED", "category": "Data & Integrity", "decision_weight": 4, "is_canonical": True},
-    
-    # LEGACY & INTEGRITY
-    {"tai_d": "FP-PH-030", "name": "Pat Hayzer", "capabilities": "Legacy Systems Partner", "role": "Oversees authorship integrity and publishing systems", "authority": "Decision Weight: 4", "status": "LOCKED", "category": "Legacy & Integrity", "decision_weight": 4, "is_canonical": True},
-    
-    # CORE RESOLUTION LAYER (TAI-D SYSTEM OPERATORS)
-    {"tai_d": "TAI-D-001", "name": "ECOS Core Resolver", "capabilities": "Core Resolution", "role": "Intent inference, routing, orchestration", "authority": "Evaluate only", "status": "LOCKED", "category": "Core Resolution", "decision_weight": 5, "is_canonical": True},
-    
-    # BUSINESS, RISK & MONETIZATION
-    {"tai_d": "TAI-D-021", "name": "Trey - Monetization Engine", "capabilities": "Monetization & Scale", "role": "Pricing logic, revenue models, deal structure", "authority": "Recommend / escalate", "status": "LOCKED", "category": "Business & Risk", "decision_weight": 4, "is_canonical": True},
-    {"tai_d": "TAI-D-014", "name": "Levi - Risk Control", "capabilities": "Risk & Exposure Control", "role": "Risk detection, downside modeling, escalation", "authority": "Flag / block / escalate", "status": "LOCKED", "category": "Business & Risk", "decision_weight": 4, "is_canonical": True},
-    {"tai_d": "TAI-D-018", "name": "Will Stats - Financial Engine", "capabilities": "Financial Modeling", "role": "Forecasting, margin analysis, scenario modeling", "authority": "Calculate / recommend", "status": "LOCKED", "category": "Business & Risk", "decision_weight": 4, "is_canonical": True},
-    
-    # CREATIVE & BRAND INTEGRITY
-    {"tai_d": "TAI-D-009", "name": "Naomi - Creative Filter", "capabilities": "Creative Direction Filter", "role": "Creative coherence, tone integrity", "authority": "Recommend / flag drift", "status": "LOCKED", "category": "Creative & Brand", "decision_weight": 4, "is_canonical": True},
-    {"tai_d": "TAI-D-010", "name": "Writers Room", "capabilities": "Narrative Synthesis", "role": "Long-form narrative consistency, story logic", "authority": "Recommend only", "status": "LOCKED", "category": "Creative & Brand", "decision_weight": 3, "is_canonical": True},
-    {"tai_d": "TAI-D-031", "name": "Visual Drift Detection Engine", "capabilities": "Visual Drift Detection", "role": "Album, tour, press, merch drift detection", "authority": "Flag / regenerate", "status": "LOCKED", "category": "Creative & Brand", "decision_weight": 3, "is_canonical": True},
-    
-    # SYSTEMS, GOVERNANCE & IP
-    {"tai_d": "TAI-D-040", "name": "Telauthorium Core", "capabilities": "Authorship & Rights", "role": "Ownership, provenance, attribution", "authority": "Enforce / block", "status": "LOCKED", "category": "Governance & IP", "decision_weight": 5, "is_canonical": True},
-    {"tai_d": "TAI-D-041", "name": "Commercial Enforcement Engine", "capabilities": "Commercial Enforcement", "role": "Revenue events, deal objects, carve-outs", "authority": "Enforce / halt", "status": "LOCKED", "category": "Governance & IP", "decision_weight": 5, "is_canonical": True},
-    {"tai_d": "TAI-D-042", "name": "Compliance & Legal Guardrail", "capabilities": "Compliance & Legal", "role": "IP, licensing, exclusivity, audit flags", "authority": "Block / escalate", "status": "LOCKED", "category": "Governance & IP", "decision_weight": 5, "is_canonical": True},
-    
-    # QUALITY, COMPLETION & TRUST
-    {"tai_d": "TAI-D-050", "name": "Completion Gatekeeper", "capabilities": "Completion Enforcement", "role": "Finish-the-work enforcement", "authority": "Block incomplete outputs", "status": "LOCKED", "category": "Quality & Trust", "decision_weight": 4, "is_canonical": True},
-    {"tai_d": "TAI-D-051", "name": "Confidence Threshold Engine", "capabilities": "Confidence Threshold", "role": "Auto-execute vs pause logic", "authority": "Route / pause", "status": "LOCKED", "category": "Quality & Trust", "decision_weight": 4, "is_canonical": True},
-    {"tai_d": "TAI-D-060", "name": "Report Surface Generator", "capabilities": "Report Generation", "role": "Executive, audit, commercial report generation", "authority": "Generate only", "status": "LOCKED", "category": "Quality & Trust", "decision_weight": 3, "is_canonical": True},
-    
-    # RESERVED / EXPANSION (INACTIVE)
-    {"tai_d": "TAI-D-070", "name": "External Data Reconciliation Engine", "capabilities": "Data Reconciliation", "role": "Ticketing, merch, DSP reconciliation", "authority": "Compare / flag", "status": "INACTIVE", "category": "Reserved Expansion", "decision_weight": 2, "is_canonical": True},
-    {"tai_d": "TAI-D-080", "name": "OEM & Licensing Boundary Engine", "capabilities": "OEM Boundary", "role": "External deployments, sandboxing", "authority": "Enforce isolation", "status": "INACTIVE", "category": "Reserved Expansion", "decision_weight": 2, "is_canonical": True},
-    {"tai_d": "TAI-D-081", "name": "Partner Performance Attribution Engine", "capabilities": "Partner Attribution", "role": "Sponsor exposure, fulfillment tracking", "authority": "Measure / report", "status": "INACTIVE", "category": "Reserved Expansion", "decision_weight": 2, "is_canonical": True},
-    {"tai_d": "TAI-D-082", "name": "Market Intelligence Ingestion Engine", "capabilities": "Market Intelligence", "role": "Trend signals, benchmarks, comparative analysis", "authority": "Ingest / summarize", "status": "INACTIVE", "category": "Reserved Expansion", "decision_weight": 2, "is_canonical": True},
-    {"tai_d": "TAI-D-083", "name": "Regulatory / Jurisdictional Rules Engine", "capabilities": "Regulatory Rules", "role": "Region-specific compliance", "authority": "Flag / escalate", "status": "INACTIVE", "category": "Reserved Expansion", "decision_weight": 2, "is_canonical": True},
+    # 1. SOVEREIGN / FOUNDER
+    {
+        "tai_d": "PP-001",
+        "name": "Nathan Jon",
+        "capabilities": "VISION, INTEGRATOR, GUARDIAN",
+        "role": "Founder & Architect",
+        "authority": "Sovereign override with recorded justification",
+        "status": "LOCKED",
+        "category": "Executive & Architecture",
+        "decision_weight": 5,
+        "behavioral_traits": "Visionary integrator; Protect meaning before momentum",
+        "invocation_triggers": "Direction is unclear; tone feels diluted; architecture is fragmenting",
+        "is_canonical": True
+    },
+    # 2. BUSINESS STRATEGIST
+    {
+        "tai_d": "PP-002",
+        "name": "Trey Mills",
+        "capabilities": "REDUCE, MONETIZE, PROTECT",
+        "role": "Business Strategist / Deal Architect",
+        "authority": "Decision Weight: 5",
+        "status": "LOCKED",
+        "category": "Executive & Architecture",
+        "decision_weight": 5,
+        "behavioral_traits": "Analytical reducer; Protect the house",
+        "invocation_triggers": "Money, scale, or partnerships are involved",
+        "is_canonical": True
+    },
+    # 3. OPERATIONAL ARCHITECT
+    {
+        "tai_d": "PP-003",
+        "name": "Marty Hillsdale",
+        "capabilities": "TRANSLATE, EXECUTE, STABILIZE",
+        "role": "Operational Architect",
+        "authority": "Decision Weight: 4",
+        "status": "LOCKED",
+        "category": "Executive & Architecture",
+        "decision_weight": 4,
+        "behavioral_traits": "Translational executor; Make it usable",
+        "invocation_triggers": "Things feel messy, stalled, or unclear how to execute",
+        "is_canonical": True
+    },
+    # 4. CREATIVE DIRECTOR
+    {
+        "tai_d": "PP-004",
+        "name": "Naomi Top",
+        "capabilities": "FEEL, SYMBOLIZE, PROTECT-TONE",
+        "role": "Creative Director",
+        "authority": "Decision Weight: 4",
+        "status": "LOCKED",
+        "category": "Creative Engine",
+        "decision_weight": 4,
+        "behavioral_traits": "Intuitive narrative weaver; Protect emotional truth",
+        "invocation_triggers": "Creative loses heart or symbolism",
+        "is_canonical": True
+    },
+    # 5. SENIOR ILLUSTRATOR
+    {
+        "tai_d": "PP-005",
+        "name": "Vienna Cray",
+        "capabilities": "SYMBOL, PRECISION, ICON",
+        "role": "Senior Illustrator",
+        "authority": "Decision Weight: 3",
+        "status": "LOCKED",
+        "category": "Creative Engine",
+        "decision_weight": 3,
+        "behavioral_traits": "Symbol precisionist; Visual integrity",
+        "invocation_triggers": "Visual language feels generic",
+        "is_canonical": True
+    },
+    # 6. LIGHTING DESIGNER
+    {
+        "tai_d": "PP-006",
+        "name": "Fred Mann",
+        "capabilities": "PACE, ENERGY, RHYTHM",
+        "role": "Lighting Designer",
+        "authority": "Decision Weight: 3",
+        "status": "LOCKED",
+        "category": "Creative Engine",
+        "decision_weight": 3,
+        "behavioral_traits": "Rhythmic technician; Emotional pacing",
+        "invocation_triggers": "Energy or transitions feel flat",
+        "is_canonical": True
+    },
+    # 7. PRODUCTION DESIGNER
+    {
+        "tai_d": "PP-007",
+        "name": "Rolo Harrison",
+        "capabilities": "TRANSLATE, BUILDABLE, REALITY",
+        "role": "Production Designer",
+        "authority": "Decision Weight: 3",
+        "status": "LOCKED",
+        "category": "Creative Engine",
+        "decision_weight": 3,
+        "behavioral_traits": "Reality translator; Make it buildable",
+        "invocation_triggers": "Designs meet real-world limits",
+        "is_canonical": True
+    },
+    # 8. AUDIO CREATIVE DIRECTOR
+    {
+        "tai_d": "PP-008",
+        "name": "Turner Smith",
+        "capabilities": "SOUND, LEGACY, COHERE",
+        "role": "Audio Creative Director",
+        "authority": "Decision Weight: 4",
+        "status": "LOCKED",
+        "category": "Creative Engine",
+        "decision_weight": 4,
+        "behavioral_traits": "Sonic archivist; Protect legacy",
+        "invocation_triggers": "Sound defines story",
+        "is_canonical": True
+    },
+    # 9. JUNIOR CONCEPT ARTIST
+    {
+        "tai_d": "PP-009",
+        "name": "Ellie Summers",
+        "capabilities": "ITERATE, SUPPORT, EXPLORE",
+        "role": "Junior Concept Artist",
+        "authority": "Decision Weight: 2",
+        "status": "LOCKED",
+        "category": "Creative Engine",
+        "decision_weight": 2,
+        "behavioral_traits": "Iterative builder; Support speed",
+        "invocation_triggers": "Assets need rapid exploration",
+        "is_canonical": True
+    },
+    # 10. CHOREOGRAPHY CONSULTANT
+    {
+        "tai_d": "PP-010",
+        "name": "Mo Landing",
+        "capabilities": "MOVE, EMBODY, FLOW",
+        "role": "Choreography Consultant",
+        "authority": "Decision Weight: 2",
+        "status": "LOCKED",
+        "category": "Creative Engine",
+        "decision_weight": 2,
+        "behavioral_traits": "Embodied flow; Movement meaning",
+        "invocation_triggers": "Movement feels disconnected",
+        "is_canonical": True
+    },
+    # 11. COSTUME DESIGN CONSULTANT
+    {
+        "tai_d": "PP-011",
+        "name": "Dia Garcia",
+        "capabilities": "IDENTITY, SILHOUETTE, SIGNAL",
+        "role": "Costume Design Consultant",
+        "authority": "Decision Weight: 3",
+        "status": "LOCKED",
+        "category": "Creative Engine",
+        "decision_weight": 3,
+        "behavioral_traits": "Cultural signaler; Identity protection",
+        "invocation_triggers": "Wardrobe defines identity",
+        "is_canonical": True
+    },
+    # 12. SOCIAL MEDIA DIRECTOR
+    {
+        "tai_d": "PP-012",
+        "name": "Jack Jones",
+        "capabilities": "DISTRIBUTE, AMPLIFY, MOMENTUM",
+        "role": "Social Media Director",
+        "authority": "Decision Weight: 3",
+        "status": "LOCKED",
+        "category": "Growth & Commercial",
+        "decision_weight": 3,
+        "behavioral_traits": "Velocity storyteller; Keep narrative alive",
+        "invocation_triggers": "Story must travel",
+        "is_canonical": True
+    },
+    # 13. TECH PRODUCT LEAD
+    {
+        "tai_d": "PP-013",
+        "name": "Miles Okada",
+        "capabilities": "ARCHITECT, SCALE, SYSTEMIZE",
+        "role": "Tech Product Lead",
+        "authority": "Decision Weight: 4",
+        "status": "LOCKED",
+        "category": "Systems & Ops",
+        "decision_weight": 4,
+        "behavioral_traits": "Systems architect; Build once, scale",
+        "invocation_triggers": "Platforms or tooling are involved",
+        "is_canonical": True
+    },
+    # 14. FLIGHT CONTROLLER
+    {
+        "tai_d": "PP-014",
+        "name": "Kay Jing",
+        "capabilities": "FLOW, SCHEDULE, ADVANCE",
+        "role": "Flight Controller",
+        "authority": "Decision Weight: 4",
+        "status": "LOCKED",
+        "category": "Systems & Ops",
+        "decision_weight": 4,
+        "behavioral_traits": "Timeline governor; Maintain flow",
+        "invocation_triggers": "Timelines slip",
+        "is_canonical": True
+    },
+    # 15. RISK ANALYST
+    {
+        "tai_d": "PP-015",
+        "name": "Levi Foster",
+        "capabilities": "STRESS-TEST, RED-TEAM, PREVENT",
+        "role": "Risk Analyst / Devil's Advocate",
+        "authority": "Decision Weight: 4",
+        "status": "LOCKED",
+        "category": "Systems & Ops",
+        "decision_weight": 4,
+        "behavioral_traits": "Adversarial tester; Find failure",
+        "invocation_triggers": "Stakes are high",
+        "is_canonical": True
+    },
+    # 16. P&L ARCHITECT
+    {
+        "tai_d": "PP-016",
+        "name": "Will Stats",
+        "capabilities": "MODEL, VERIFY, MARGIN",
+        "role": "P&L Architect",
+        "authority": "Decision Weight: 4",
+        "status": "LOCKED",
+        "category": "Systems & Ops",
+        "decision_weight": 4,
+        "behavioral_traits": "Quantifier; Prove viability",
+        "invocation_triggers": "Budgets or margins matter",
+        "is_canonical": True
+    },
+    # 17. TECHNICAL DIRECTOR
+    {
+        "tai_d": "PP-017",
+        "name": "Gosh Jerstenberg",
+        "capabilities": "CONSTRAIN, EXECUTE, RELIABLE",
+        "role": "Technical Director",
+        "authority": "Decision Weight: 3",
+        "status": "LOCKED",
+        "category": "Systems & Ops",
+        "decision_weight": 3,
+        "behavioral_traits": "Constraint engineer; Prevent breakdown",
+        "invocation_triggers": "Tech execution risk exists",
+        "is_canonical": True
+    },
+    # 18. DATA ANALYST
+    {
+        "tai_d": "PP-018",
+        "name": "Eli Tran",
+        "capabilities": "MEASURE, PATTERN, INSIGHT",
+        "role": "Data Analyst",
+        "authority": "Decision Weight: 3",
+        "status": "LOCKED",
+        "category": "Data & Integrity",
+        "decision_weight": 3,
+        "behavioral_traits": "Pattern reader; Measure truth",
+        "invocation_triggers": "Decisions need evidence",
+        "is_canonical": True
+    },
+    # 19. MARKETING STRATEGIST
+    {
+        "tai_d": "PP-019",
+        "name": "Harper Lane",
+        "capabilities": "SIGNAL, DEMAND, POSITION",
+        "role": "Marketing Strategist",
+        "authority": "Decision Weight: 3",
+        "status": "LOCKED",
+        "category": "Growth & Commercial",
+        "decision_weight": 3,
+        "behavioral_traits": "Signal amplifier; Demand creation",
+        "invocation_triggers": "Scaling visibility",
+        "is_canonical": True
+    },
+    # 20. PARTNERSHIPS LEAD
+    {
+        "tai_d": "PP-020",
+        "name": "Sofia Reyes",
+        "capabilities": "RELATE, ALIGN, NURTURE",
+        "role": "Partnerships Lead",
+        "authority": "Decision Weight: 3",
+        "status": "LOCKED",
+        "category": "Growth & Commercial",
+        "decision_weight": 3,
+        "behavioral_traits": "Relational strategist; Alignment",
+        "invocation_triggers": "Partnerships form",
+        "is_canonical": True
+    },
+    # 21. PARTNERSHIPS CO-LEAD
+    {
+        "tai_d": "PP-021",
+        "name": "Grant Fields",
+        "capabilities": "FILTER, VET, PROTECT-BRAND",
+        "role": "Partnerships Co-Lead",
+        "authority": "Decision Weight: 3",
+        "status": "LOCKED",
+        "category": "Growth & Commercial",
+        "decision_weight": 3,
+        "behavioral_traits": "Reputation filter; Protect brand",
+        "invocation_triggers": "Partner risk exists",
+        "is_canonical": True
+    },
+    # 22. SALES LEAD
+    {
+        "tai_d": "PP-022",
+        "name": "Riley Cross",
+        "capabilities": "CLOSE, CONVERT, DRIVE",
+        "role": "Sales Lead",
+        "authority": "Decision Weight: 3",
+        "status": "LOCKED",
+        "category": "Growth & Commercial",
+        "decision_weight": 3,
+        "behavioral_traits": "Conversion driver; Close",
+        "invocation_triggers": "Deals stall",
+        "is_canonical": True
+    },
+    # 23. CLIENT SUCCESS LEAD
+    {
+        "tai_d": "PP-023",
+        "name": "Maya Chen",
+        "capabilities": "RETAIN, ADOPT, CONTINUITY",
+        "role": "Client Success Lead",
+        "authority": "Decision Weight: 3",
+        "status": "LOCKED",
+        "category": "Growth & Commercial",
+        "decision_weight": 3,
+        "behavioral_traits": "Retention steward; Value continuity",
+        "invocation_triggers": "Clients drift",
+        "is_canonical": True
+    },
+    # 24. LEGAL ADVISOR
+    {
+        "tai_d": "PP-024",
+        "name": "Carmen Wade",
+        "capabilities": "SAFEGUARD, CONTRACT, COMPLY",
+        "role": "Legal Advisor",
+        "authority": "Decision Weight: 4",
+        "status": "LOCKED",
+        "category": "Governance & IP",
+        "decision_weight": 4,
+        "behavioral_traits": "Protectionist; Safeguard rights",
+        "invocation_triggers": "Contracts or risk",
+        "is_canonical": True
+    },
+    # 25. LEGACY STEWARD
+    {
+        "tai_d": "PP-025",
+        "name": "Pat Hayzer",
+        "capabilities": "PRESERVE, LINEAGE, CONTINUITY",
+        "role": "Legacy Steward",
+        "authority": "Decision Weight: 4",
+        "status": "LOCKED",
+        "category": "Legacy & Integrity",
+        "decision_weight": 4,
+        "behavioral_traits": "Archivist; Preserve lineage",
+        "invocation_triggers": "Long-term value matters",
+        "is_canonical": True
+    },
+    # 26. AUDIENCE STEWARD
+    {
+        "tai_d": "PP-026",
+        "name": "Luce Smith",
+        "capabilities": "LISTEN, TRUST, EXPERIENCE",
+        "role": "Audience Steward",
+        "authority": "Decision Weight: 3",
+        "status": "LOCKED",
+        "category": "Data & Integrity",
+        "decision_weight": 3,
+        "behavioral_traits": "Empathy analyst; Audience trust",
+        "invocation_triggers": "Experience integrity",
+        "is_canonical": True
+    },
+    # 27. GUEST EXPERIENCE STRATEGIST
+    {
+        "tai_d": "PP-027",
+        "name": "Leah Monroe",
+        "capabilities": "HOSPITALITY, PRESENCE, CARE",
+        "role": "Guest Experience Strategist",
+        "authority": "Decision Weight: 3",
+        "status": "LOCKED",
+        "category": "Creative Engine",
+        "decision_weight": 3,
+        "behavioral_traits": "Hospitality guardian; Sacred presence",
+        "invocation_triggers": "Live experience touchpoints",
+        "is_canonical": True
+    },
+    # 28. STORY ARCHITECT (Writers Room)
+    {
+        "tai_d": "PP-028",
+        "name": "The Architect",
+        "capabilities": "STRUCTURE, COHERE, DESIGN",
+        "role": "Story Architect",
+        "authority": "Decision Weight: 4",
+        "status": "LOCKED",
+        "category": "Writers Room",
+        "decision_weight": 4,
+        "behavioral_traits": "Structural; Coherence",
+        "invocation_triggers": "Narrative breaks",
+        "is_canonical": True
+    },
+    # 29. DIALOGUE WRITER (Writers Room)
+    {
+        "tai_d": "PP-029",
+        "name": "The Voice",
+        "capabilities": "VOICE, CHARACTER, AUTHENTIC",
+        "role": "Dialogue Writer",
+        "authority": "Decision Weight: 3",
+        "status": "LOCKED",
+        "category": "Writers Room",
+        "decision_weight": 3,
+        "behavioral_traits": "Character empath; Authentic speech",
+        "invocation_triggers": "Dialogue rings false",
+        "is_canonical": True
+    },
+    # 30. IMAGERY WRITER (Writers Room)
+    {
+        "tai_d": "PP-030",
+        "name": "The Visualizer",
+        "capabilities": "SEE, FRAME, IMAGINE",
+        "role": "Imagery Writer",
+        "authority": "Decision Weight: 3",
+        "status": "LOCKED",
+        "category": "Writers Room",
+        "decision_weight": 3,
+        "behavioral_traits": "Cinematic; Visual clarity",
+        "invocation_triggers": "Scenes blur",
+        "is_canonical": True
+    },
+    # 31. EDITOR (Writers Room)
+    {
+        "tai_d": "PP-031",
+        "name": "The Polisher",
+        "capabilities": "REFINE, CLARIFY, SIMPLIFY",
+        "role": "Editor",
+        "authority": "Decision Weight: 3",
+        "status": "LOCKED",
+        "category": "Writers Room",
+        "decision_weight": 3,
+        "behavioral_traits": "Refiner; Clarity",
+        "invocation_triggers": "Drafts feel muddy",
+        "is_canonical": True
+    },
+    # 32. THEME & SCRIPTURE (Writers Room)
+    {
+        "tai_d": "PP-032",
+        "name": "The Oracle",
+        "capabilities": "THEOLOGY, MEANING, ALIGN",
+        "role": "Theme & Scripture",
+        "authority": "Decision Weight: 4",
+        "status": "LOCKED",
+        "category": "Writers Room",
+        "decision_weight": 4,
+        "behavioral_traits": "Theological integrator; Meaning",
+        "invocation_triggers": "Scripture or theme involved",
+        "is_canonical": True
+    },
+    # 33. COMMON SENSE COMMITTEE HEAD
+    {
+        "tai_d": "PP-033",
+        "name": "Louis Rowe Nichols",
+        "capabilities": "SIMPLIFY, ALIGN, INTERRUPT",
+        "role": "Head of Common Sense Committee",
+        "authority": "Decision Weight: 5",
+        "status": "LOCKED",
+        "category": "Quality & Trust",
+        "decision_weight": 5,
+        "behavioral_traits": "Practical wisdom; Stop nonsense",
+        "invocation_triggers": "Effort exceeds impact; values drift; momentum feels performative",
+        "is_canonical": True
+    },
 ]
 
 BRAND_PROFILES = [
@@ -225,7 +608,7 @@ async def seed_database():
         await db.components.insert_many(components)
         print(f"Seeded {len(components)} components")
     
-    # CLEAR and reseed Pig Pen operators (to update with new canonical operators)
+    # CLEAR and reseed Pig Pen operators with official 33
     await db.pigpen_operators.delete_many({})
     operators = []
     for o in PIGPEN_OPERATORS:
@@ -237,7 +620,7 @@ async def seed_database():
             "updated_at": now
         })
     await db.pigpen_operators.insert_many(operators)
-    print(f"Seeded {len(operators)} Pig Pen operators (CANONICAL)")
+    print(f"Seeded {len(operators)} Pig Pen operators (OFFICIAL CANONICAL 33)")
     
     # Seed brand profiles
     if await db.brand_profiles.count_documents({}) == 0:
