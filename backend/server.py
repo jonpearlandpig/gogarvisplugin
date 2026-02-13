@@ -29,7 +29,7 @@ api_router = APIRouter(prefix="/api")
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 chat_sessions = {}
 
-DOCS_PATH = Path("/app/gogarvis_docs")
+DOCS_PATH = Path("/app/docs/specs")
 
 # ============== Auth Models ==============
 
