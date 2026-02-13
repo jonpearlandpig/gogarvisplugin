@@ -1,6 +1,6 @@
 import { useState, useEffect, createContext, useContext } from "react";
 import "@/App.css";
-import { BrowserRouter, Routes, Route, NavLink, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, NavLink, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { 
     LayoutDashboard, 
@@ -13,9 +13,15 @@ import {
     Moon,
     ChevronRight,
     Menu,
-    X
+    X,
+    Users,
+    History,
+    Bot,
+    Palette,
+    LogOut,
+    LogIn
 } from "lucide-react";
-import { Toaster } from "sonner";
+import { Toaster, toast } from "sonner";
 
 import Dashboard from "@/pages/Dashboard";
 import Documentation from "@/pages/Documentation";
@@ -23,9 +29,66 @@ import Architecture from "@/pages/Architecture";
 import GarvisChat from "@/pages/GarvisChat";
 import Glossary from "@/pages/Glossary";
 import SettingsPage from "@/pages/Settings";
+import PigPen from "@/pages/PigPen";
+import Brands from "@/pages/Brands";
+import AuditLog from "@/pages/AuditLog";
+import AdminUsers from "@/pages/AdminUsers";
+import Login from "@/pages/Login";
+import AuthCallback from "@/pages/AuthCallback";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 export const API = `${BACKEND_URL}/api`;
+
+// Auth Context
+const AuthContext = createContext();
+
+export const useAuth = () => {
+    const context = useContext(AuthContext);
+    if (!context) throw new Error("useAuth must be used within AuthProvider");
+    return context;
+};
+
+const AuthProvider = ({ children }) => {
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        checkAuth();
+    }, []);
+
+    const checkAuth = async () => {
+        try {
+            const response = await axios.get(`${API}/auth/me`, { withCredentials: true });
+            setUser(response.data);
+        } catch (error) {
+            setUser(null);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const login = (userData) => {
+        setUser(userData);
+    };
+
+    const logout = async () => {
+        try {
+            await axios.post(`${API}/auth/logout`, {}, { withCredentials: true });
+        } catch (error) {
+            console.error("Logout error:", error);
+        }
+        setUser(null);
+    };
+
+    const canEdit = () => user?.role === "admin" || user?.role === "editor";
+    const isAdmin = () => user?.role === "admin";
+
+    return (
+        <AuthContext.Provider value={{ user, loading, login, logout, checkAuth, canEdit, isAdmin }}>
+            {children}
+        </AuthContext.Provider>
+    );
+};
 
 // Theme Context
 const ThemeContext = createContext();
@@ -60,23 +123,45 @@ const ThemeProvider = ({ children }) => {
 };
 
 // Navigation items
-const navItems = [
-    { path: "/", icon: LayoutDashboard, label: "DASHBOARD" },
-    { path: "/docs", icon: FileText, label: "DOCUMENTATION" },
-    { path: "/architecture", icon: Network, label: "ARCHITECTURE" },
-    { path: "/chat", icon: MessageSquare, label: "GARVIS AI" },
-    { path: "/glossary", icon: BookOpen, label: "GLOSSARY" },
-    { path: "/settings", icon: Settings, label: "SETTINGS" },
-];
+const getNavItems = (user) => {
+    const items = [
+        { path: "/", icon: LayoutDashboard, label: "DASHBOARD" },
+        { path: "/docs", icon: FileText, label: "DOCUMENTATION" },
+        { path: "/architecture", icon: Network, label: "ARCHITECTURE" },
+        { path: "/pigpen", icon: Bot, label: "PIG PEN" },
+        { path: "/brands", icon: Palette, label: "BRANDS" },
+        { path: "/chat", icon: MessageSquare, label: "GARVIS AI" },
+        { path: "/glossary", icon: BookOpen, label: "GLOSSARY" },
+    ];
+
+    if (user) {
+        items.push({ path: "/audit", icon: History, label: "AUDIT LOG" });
+        if (user.role === "admin") {
+            items.push({ path: "/admin/users", icon: Users, label: "USERS" });
+        }
+    }
+
+    items.push({ path: "/settings", icon: Settings, label: "SETTINGS" });
+
+    return items;
+};
 
 // Sidebar Component
 const Sidebar = ({ isOpen, onClose }) => {
     const location = useLocation();
+    const navigate = useNavigate();
     const { theme, toggleTheme } = useTheme();
+    const { user, logout } = useAuth();
+    const navItems = getNavItems(user);
+
+    const handleLogout = async () => {
+        await logout();
+        navigate("/");
+        toast.success("Logged out successfully");
+    };
 
     return (
         <>
-            {/* Mobile overlay */}
             {isOpen && (
                 <div 
                     className="fixed inset-0 bg-black/50 z-40 lg:hidden"
@@ -93,7 +178,6 @@ const Sidebar = ({ isOpen, onClose }) => {
                 `}
                 data-testid="sidebar"
             >
-                {/* Logo */}
                 <div className="h-16 border-b border-border flex items-center px-6">
                     <span className="font-mono text-xl font-bold tracking-tight text-primary">
                         GOGARVIS
@@ -107,8 +191,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                     </button>
                 </div>
 
-                {/* Navigation */}
-                <nav className="p-4 space-y-1">
+                <nav className="p-4 space-y-1 h-[calc(100%-16rem)] overflow-y-auto">
                     {navItems.map((item) => {
                         const Icon = item.icon;
                         const isActive = location.pathname === item.path;
@@ -126,7 +209,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                                         : 'text-muted-foreground hover:bg-secondary hover:text-foreground'
                                     }
                                 `}
-                                data-testid={`nav-${item.label.toLowerCase().replace(' ', '-')}`}
+                                data-testid={`nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
                             >
                                 <Icon size={16} strokeWidth={1.5} />
                                 {item.label}
@@ -136,20 +219,57 @@ const Sidebar = ({ isOpen, onClose }) => {
                     })}
                 </nav>
 
-                {/* Theme Toggle */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-border">
-                    <button
-                        onClick={toggleTheme}
-                        className="w-full flex items-center gap-3 px-4 py-3 font-mono text-xs tracking-wider text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors duration-100"
-                        data-testid="theme-toggle-btn"
-                    >
-                        {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
-                        {theme === "dark" ? "LIGHT MODE" : "DARK MODE"}
-                    </button>
-                    <div className="px-4 py-2">
-                        <span className="font-mono text-[10px] text-muted-foreground tracking-wider">
-                            v1.0.0 // PEARL & PIG
-                        </span>
+                <div className="absolute bottom-0 left-0 right-0 border-t border-border">
+                    {user ? (
+                        <div className="p-4 border-b border-border">
+                            <div className="flex items-center gap-3 mb-3">
+                                {user.picture ? (
+                                    <img src={user.picture} alt={user.name} className="w-8 h-8 rounded-full" />
+                                ) : (
+                                    <div className="w-8 h-8 bg-primary flex items-center justify-center font-mono text-xs text-primary-foreground">
+                                        {user.name?.charAt(0).toUpperCase()}
+                                    </div>
+                                )}
+                                <div className="flex-1 min-w-0">
+                                    <div className="font-mono text-xs truncate">{user.name}</div>
+                                    <div className="font-mono text-[10px] text-primary uppercase">{user.role}</div>
+                                </div>
+                            </div>
+                            <button
+                                onClick={handleLogout}
+                                className="w-full flex items-center gap-3 px-4 py-2 font-mono text-xs tracking-wider text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+                                data-testid="logout-btn"
+                            >
+                                <LogOut size={14} />
+                                LOGOUT
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="p-4 border-b border-border">
+                            <NavLink
+                                to="/login"
+                                className="w-full flex items-center gap-3 px-4 py-2 font-mono text-xs tracking-wider bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                                data-testid="login-btn"
+                            >
+                                <LogIn size={14} />
+                                LOGIN
+                            </NavLink>
+                        </div>
+                    )}
+                    <div className="p-4">
+                        <button
+                            onClick={toggleTheme}
+                            className="w-full flex items-center gap-3 px-4 py-2 font-mono text-xs tracking-wider text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+                            data-testid="theme-toggle-btn"
+                        >
+                            {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
+                            {theme === "dark" ? "LIGHT MODE" : "DARK MODE"}
+                        </button>
+                        <div className="px-4 py-2">
+                            <span className="font-mono text-[10px] text-muted-foreground tracking-wider">
+                                v2.0.0 // PEARL & PIG
+                            </span>
+                        </div>
                     </div>
                 </div>
             </aside>
@@ -160,6 +280,8 @@ const Sidebar = ({ isOpen, onClose }) => {
 // Header Component
 const Header = ({ onMenuClick }) => {
     const location = useLocation();
+    const { user } = useAuth();
+    const navItems = getNavItems(user);
     const currentPage = navItems.find(item => item.path === location.pathname);
 
     return (
@@ -206,24 +328,46 @@ const Layout = ({ children }) => {
     );
 };
 
+// App Router with Auth Callback Detection
+function AppRouter() {
+    const location = useLocation();
+    
+    // REMINDER: DO NOT HARDCODE THE URL, OR ADD ANY FALLBACKS OR REDIRECT URLS, THIS BREAKS THE AUTH
+    // Check for session_id in URL fragment SYNCHRONOUSLY during render
+    if (location.hash?.includes('session_id=')) {
+        return <AuthCallback />;
+    }
+
+    return (
+        <Layout>
+            <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/docs" element={<Documentation />} />
+                <Route path="/architecture" element={<Architecture />} />
+                <Route path="/pigpen" element={<PigPen />} />
+                <Route path="/brands" element={<Brands />} />
+                <Route path="/chat" element={<GarvisChat />} />
+                <Route path="/glossary" element={<Glossary />} />
+                <Route path="/audit" element={<AuditLog />} />
+                <Route path="/admin/users" element={<AdminUsers />} />
+                <Route path="/settings" element={<SettingsPage />} />
+                <Route path="/login" element={<Login />} />
+            </Routes>
+        </Layout>
+    );
+}
+
 function App() {
     return (
         <ThemeProvider>
-            <div className="App">
-                <BrowserRouter>
-                    <Layout>
-                        <Routes>
-                            <Route path="/" element={<Dashboard />} />
-                            <Route path="/docs" element={<Documentation />} />
-                            <Route path="/architecture" element={<Architecture />} />
-                            <Route path="/chat" element={<GarvisChat />} />
-                            <Route path="/glossary" element={<Glossary />} />
-                            <Route path="/settings" element={<SettingsPage />} />
-                        </Routes>
-                    </Layout>
-                </BrowserRouter>
-                <Toaster position="bottom-right" theme="dark" />
-            </div>
+            <AuthProvider>
+                <div className="App">
+                    <BrowserRouter>
+                        <AppRouter />
+                    </BrowserRouter>
+                    <Toaster position="bottom-right" theme="dark" />
+                </div>
+            </AuthProvider>
         </ThemeProvider>
     );
 }
