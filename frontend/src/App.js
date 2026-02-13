@@ -1,54 +1,231 @@
-import { useEffect } from "react";
+import { useState, useEffect, createContext, useContext } from "react";
 import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, NavLink, useLocation } from "react-router-dom";
 import axios from "axios";
+import { 
+    LayoutDashboard, 
+    FileText, 
+    Network, 
+    MessageSquare, 
+    BookOpen,
+    Settings,
+    Sun,
+    Moon,
+    ChevronRight,
+    Menu,
+    X
+} from "lucide-react";
+import { Toaster } from "sonner";
+
+import Dashboard from "@/pages/Dashboard";
+import Documentation from "@/pages/Documentation";
+import Architecture from "@/pages/Architecture";
+import GarvisChat from "@/pages/GarvisChat";
+import Glossary from "@/pages/Glossary";
+import SettingsPage from "@/pages/Settings";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+export const API = `${BACKEND_URL}/api`;
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
+// Theme Context
+const ThemeContext = createContext();
 
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
+export const useTheme = () => {
+    const context = useContext(ThemeContext);
+    if (!context) throw new Error("useTheme must be used within ThemeProvider");
+    return context;
+};
 
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
+const ThemeProvider = ({ children }) => {
+    const [theme, setTheme] = useState(() => {
+        const saved = localStorage.getItem("gogarvis-theme");
+        return saved || "dark";
+    });
+
+    useEffect(() => {
+        localStorage.setItem("gogarvis-theme", theme);
+        document.documentElement.classList.remove("light", "dark");
+        if (theme === "light") {
+            document.documentElement.classList.add("light");
+        }
+    }, [theme]);
+
+    const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
+
+    return (
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+            {children}
+        </ThemeContext.Provider>
+    );
+};
+
+// Navigation items
+const navItems = [
+    { path: "/", icon: LayoutDashboard, label: "DASHBOARD" },
+    { path: "/docs", icon: FileText, label: "DOCUMENTATION" },
+    { path: "/architecture", icon: Network, label: "ARCHITECTURE" },
+    { path: "/chat", icon: MessageSquare, label: "GARVIS AI" },
+    { path: "/glossary", icon: BookOpen, label: "GLOSSARY" },
+    { path: "/settings", icon: Settings, label: "SETTINGS" },
+];
+
+// Sidebar Component
+const Sidebar = ({ isOpen, onClose }) => {
+    const location = useLocation();
+    const { theme, toggleTheme } = useTheme();
+
+    return (
+        <>
+            {/* Mobile overlay */}
+            {isOpen && (
+                <div 
+                    className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+                    onClick={onClose}
+                    data-testid="sidebar-overlay"
+                />
+            )}
+            
+            <aside 
+                className={`
+                    fixed top-0 left-0 h-full w-64 bg-background border-r border-border z-50
+                    transform transition-transform duration-200 ease-linear
+                    ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+                `}
+                data-testid="sidebar"
+            >
+                {/* Logo */}
+                <div className="h-16 border-b border-border flex items-center px-6">
+                    <span className="font-mono text-xl font-bold tracking-tight text-primary">
+                        GOGARVIS
+                    </span>
+                    <button 
+                        className="ml-auto lg:hidden p-2 hover:bg-secondary"
+                        onClick={onClose}
+                        data-testid="sidebar-close-btn"
+                    >
+                        <X size={18} />
+                    </button>
+                </div>
+
+                {/* Navigation */}
+                <nav className="p-4 space-y-1">
+                    {navItems.map((item) => {
+                        const Icon = item.icon;
+                        const isActive = location.pathname === item.path;
+                        
+                        return (
+                            <NavLink
+                                key={item.path}
+                                to={item.path}
+                                onClick={onClose}
+                                className={`
+                                    flex items-center gap-3 px-4 py-3 font-mono text-xs tracking-wider
+                                    transition-colors duration-100
+                                    ${isActive 
+                                        ? 'bg-primary text-primary-foreground' 
+                                        : 'text-muted-foreground hover:bg-secondary hover:text-foreground'
+                                    }
+                                `}
+                                data-testid={`nav-${item.label.toLowerCase().replace(' ', '-')}`}
+                            >
+                                <Icon size={16} strokeWidth={1.5} />
+                                {item.label}
+                                {isActive && <ChevronRight size={14} className="ml-auto" />}
+                            </NavLink>
+                        );
+                    })}
+                </nav>
+
+                {/* Theme Toggle */}
+                <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-border">
+                    <button
+                        onClick={toggleTheme}
+                        className="w-full flex items-center gap-3 px-4 py-3 font-mono text-xs tracking-wider text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors duration-100"
+                        data-testid="theme-toggle-btn"
+                    >
+                        {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+                        {theme === "dark" ? "LIGHT MODE" : "DARK MODE"}
+                    </button>
+                    <div className="px-4 py-2">
+                        <span className="font-mono text-[10px] text-muted-foreground tracking-wider">
+                            v1.0.0 // PEARL & PIG
+                        </span>
+                    </div>
+                </div>
+            </aside>
+        </>
+    );
+};
+
+// Header Component
+const Header = ({ onMenuClick }) => {
+    const location = useLocation();
+    const currentPage = navItems.find(item => item.path === location.pathname);
+
+    return (
+        <header className="h-16 border-b border-border flex items-center px-6 bg-background/80 backdrop-blur-sm sticky top-0 z-30">
+            <button 
+                className="lg:hidden p-2 mr-4 hover:bg-secondary"
+                onClick={onMenuClick}
+                data-testid="menu-toggle-btn"
+            >
+                <Menu size={20} />
+            </button>
+            <div className="flex items-center gap-2">
+                <span className="font-mono text-xs text-muted-foreground tracking-wider">
+                    GOGARVIS //
+                </span>
+                <span className="font-mono text-sm font-semibold tracking-wider uppercase">
+                    {currentPage?.label || "SYSTEM"}
+                </span>
+            </div>
+            <div className="ml-auto flex items-center gap-2">
+                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                <span className="font-mono text-xs text-muted-foreground tracking-wider">
+                    OPERATIONAL
+                </span>
+            </div>
+        </header>
+    );
+};
+
+// Layout Component
+const Layout = ({ children }) => {
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+
+    return (
+        <div className="min-h-screen bg-background">
+            <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+            <div className="lg:ml-64">
+                <Header onMenuClick={() => setSidebarOpen(true)} />
+                <main className="p-6 md:p-8 lg:p-12">
+                    {children}
+                </main>
+            </div>
+        </div>
+    );
 };
 
 function App() {
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
-  );
+    return (
+        <ThemeProvider>
+            <div className="App">
+                <BrowserRouter>
+                    <Layout>
+                        <Routes>
+                            <Route path="/" element={<Dashboard />} />
+                            <Route path="/docs" element={<Documentation />} />
+                            <Route path="/architecture" element={<Architecture />} />
+                            <Route path="/chat" element={<GarvisChat />} />
+                            <Route path="/glossary" element={<Glossary />} />
+                            <Route path="/settings" element={<SettingsPage />} />
+                        </Routes>
+                    </Layout>
+                </BrowserRouter>
+                <Toaster position="bottom-right" theme="dark" />
+            </div>
+        </ThemeProvider>
+    );
 }
 
 export default App;
