@@ -1,139 +1,66 @@
-# GoGarvis - Sovereign Intelligence Framework
+# GoGarvis Portal - Product Requirements Document
 
-## Product Requirements Document v2.1
+## Original Problem Statement
+Build a web application based on PDF documentation for the "GoGarvis" system. The application serves as a web portal and CMS with the following core requirements:
+- Browse documentation and system architecture
+- CMS with Google authentication and role-based access
+- Manage Documents, Glossary Terms, Brand Profiles, and Pig Pen Operators
+- Canonical/frozen list of exactly 33 Pig Pen operators
 
-### Overview
-GoGarvis is an **open-source starter kit** for building sovereign intelligence platforms. Fork it, customize it, build your own "OS".
+## What's Been Implemented
 
-### Vision
-Enable anyone to create their own governance/intelligence system with:
-- Clear authority hierarchy
-- Content management with version control
-- Audit trail for all changes
-- AI-powered assistance
-- Role-based access control
+### MVP Portal (Completed)
+- Dashboard with system statistics
+- Documentation browser
+- Architecture visualization
+- Glossary management
 
----
+### CMS System (Completed)
+- Full CRUD for Documents, Glossary, Brands, Pig Pen Operators
+- Version history and audit logging
+- Content versioning stored in `content_versions` collection
 
-## For Users Who Clone This Repo
+### Authentication & Authorization (Completed)
+- Emergent-managed Google Auth integration
+- Role-Based Access Control (Admin, Editor, Viewer)
+- First registered user becomes Admin
+- Sovereign user (jonpearlandpig@gmail.com) has special permissions
 
-### Quick Start
-```bash
-git clone https://github.com/jonpearlandpig/gogarvis.git
-cd gogarvis
-# Follow README.md for setup
+### Pig Pen Operators (Completed - Feb 14, 2026)
+- ✅ Canonical list of exactly 33 operators (FIXED)
+- Operators are frozen/locked from editing
+- Categories: Creative Engine, Data & Integrity, Executive & Architecture, Governance & IP, Growth & Commercial, Legacy & Integrity, Quality & Trust, Systems & Ops, Writers Room
+
+### Open-Source Starter Kit (Completed)
+- Docker configuration (docker-compose.yml, Dockerfiles)
+- Documentation in /app/docs
+- README.md with setup instructions
+- CUSTOMIZATION.md guide
+
+## Technical Architecture
 ```
-
-### What You Get
-- Full CMS with documents, glossary, operators, brands
-- Version history with rollback
-- Audit logging
-- AI chat assistant
-- Google OAuth authentication
-- Role-based access (Admin, Editor, Viewer)
-
-### What You Customize
-1. **System Name** - `backend/config.py`
-2. **Visual Identity** - Colors, fonts, logo
-3. **Content** - Your own operators, documents, terms
-4. **Authority Layers** - Define your hierarchy
-5. **AI Prompt** - Train it on your domain
-
----
-
-## Tech Stack
-- **Frontend**: React 19, Tailwind CSS, Shadcn UI
-- **Backend**: FastAPI (Python)
-- **Database**: MongoDB
-- **AI**: OpenAI GPT via Emergent LLM Key
-- **Auth**: Emergent Google OAuth
-
----
-
-## Project Structure
-```
-gogarvis/
-├── README.md              # Setup guide
-├── LICENSE                # MIT License
-├── docker-compose.yml     # Docker setup
+/app/
 ├── backend/
-│   ├── server.py          # API application
-│   ├── seed.py            # Database seeder
-│   ├── config.py          # System configuration
-│   ├── Dockerfile
-│   └── .env.example
+│   ├── server.py       # FastAPI main app
+│   ├── seed.py         # DB seeding (33 operators)
+│   └── requirements.txt
 ├── frontend/
-│   ├── src/
-│   │   ├── App.js
-│   │   └── pages/
-│   ├── Dockerfile
-│   └── .env.example
-└── docs/
-    ├── CUSTOMIZATION.md   # How to rebrand
-    ├── ARCHITECTURE.md    # System design
-    ├── API.md             # API reference
-    └── specs/             # Original PDF specs
+│   ├── src/pages/      # React components
+│   └── package.json
+├── docs/               # Starter kit docs
+├── gogarvis_docs/      # Original PDFs
+└── docker-compose.yml
 ```
 
----
+## Database Schema
+- `users`: {email, name, picture, role}
+- `operators`: {operator_id, tai_d, name, capabilities, category, decision_weight, canonical}
+- `documents`: {doc_id, filename, title, category, content}
+- `content_versions`: {collection_name, document_id, data, version, created_at, created_by}
+- `glossary`, `components`, `brands`
 
-## Features Implemented
+## Backlog / Future Tasks
+- (P2) MOSE visualization tool - Interactive display of operator decision weights
 
-### Authentication
-- [x] Emergent Google OAuth
-- [x] Session management
-- [x] Role-based access (Admin/Editor/Viewer)
-- [x] First user = Admin
-
-### Content Management
-- [x] Documents CRUD + versioning
-- [x] Glossary CRUD + versioning
-- [x] System Components + versioning
-- [x] Pig Pen Operators CRUD + versioning
-- [x] Brand Profiles CRUD + versioning
-
-### Version Control
-- [x] Snapshot on every change
-- [x] Full history per item
-- [x] Rollback to any version
-
-### Audit
-- [x] Log all mutations
-- [x] Who, what, when, details
-- [x] Filter by type
-
-### AI Assistant
-- [x] GPT-5.2 powered chat
-- [x] System-aware responses
-- [x] Session persistence
-
----
-
-## Seeded Content (Default)
-- 18 Documents (from original PDFs)
-- 30 Glossary Terms
-- 8 System Components (authority hierarchy)
-- 18 Pig Pen Operators (TAI-D registry)
-- 1 Brand Profile
-
----
-
-## Future Enhancements (Community)
-- Document upload (PDF ingestion)
-- Version diff viewer
-- Bulk operations
-- Content templates
-- Workflow approvals
-- Webhook integrations
-- Multi-tenant support
-
----
-
-## Credits
-- Architecture by **Pearl & Pig**
-- Built with **Emergent Agent**
-- Open source under **MIT License**
-
----
-
-*Last updated: Feb 13, 2026*
+## Changelog
+- **Feb 14, 2026**: Fixed Pig Pen operator count from 54 to correct 33 canonical operators
