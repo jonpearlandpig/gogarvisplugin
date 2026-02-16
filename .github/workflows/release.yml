@@ -1,0 +1,40 @@
+name: Build and Release OpenClaw Plugin
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          cd backend && pip install -r requirements.txt
+          cd ../frontend && yarn install
+      - name: Package OpenClaw Skill
+        run: |
+          cd openclaw-skill-garvis-governance
+          zip -r ../garvis-openclaw-skill.zip .
+      - name: Upload Release Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: garvis-openclaw-skill
+          path: garvis-openclaw-skill.zip
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: garvis-openclaw-skill.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,3 +1,27 @@
+## Plugin Installation (OpenClaw)
+
+To use the GARVIS Governance skill as an OpenClaw plugin:
+
+1. Download the latest release artifact (garvis-openclaw-skill.zip) from the GitHub Releases page, or build manually:
+    ```bash
+    cd openclaw-skill-garvis-governance
+    zip -r ../garvis-openclaw-skill.zip .
+    ```
+2. Unzip or copy the skill folder to your OpenClaw workspace:
+    ```bash
+    unzip garvis-openclaw-skill.zip -d ~/.openclaw/workspace/skills/garvis-governance/
+    # or use the provided install script
+    cd openclaw-skill-garvis-governance
+    bash install.sh
+    ```
+3. Validate the install (optional):
+    ```bash
+    cd ~/.openclaw/workspace/skills/garvis-governance/
+    bash validate.sh
+    ```
+4. Restart your OpenClaw agent/gateway and verify the skill is loaded.
+
+See openclaw-skill-garvis-governance/README.md for more details.
 # GARVIS Full Stack - Sovereign Intelligence Framework
 
 > **Build your own sovereign intelligence and enforcement system.**

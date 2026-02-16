@@ -1,0 +1,9 @@
+{
+  "name": "garvis-governance",
+  "version": "0.1.0",
+  "description": "GARVIS Governance skill for OpenClaw: authority, audit, routing, verification, sovereignty.",
+  "author": "Your Name <your@email.com>",
+  "main": "index.ts",
+  "keywords": ["openclaw", "governance", "rbac", "audit", "plugin"],
+  "openclaw": true
+}
