@@ -269,17 +269,14 @@ const GarvisChat = () => {
         setLoading(true);
 
         try {
-            const res = await axios.post(`${API}/chat`, {
-                message: input,
-                session_id: sessionId,
-                file_ids: fileIds.length > 0 ? fileIds : null
+            // Use backend LLM proxy endpoint
+            const res = await axios.post(`${API}/llm/proxy`, {
+                prompt: input,
+                context: {
+                    session_id: sessionId,
+                    file_ids: fileIds.length > 0 ? fileIds : null
+                }
             });
-
-            const newSessionId = res.data.session_id;
-            if (newSessionId !== sessionId) {
-                setSessionId(newSessionId);
-                localStorage.setItem('garvis-session', newSessionId);
-            }
 
             const assistantMessage = {
                 role: 'assistant',

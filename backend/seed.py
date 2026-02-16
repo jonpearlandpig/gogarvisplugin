@@ -644,13 +644,14 @@ async def seed_database():
     await db.pigpen_operators.create_index("operator_id", unique=True)
     await db.pigpen_operators.create_index("tai_d", unique=True)
     await db.brand_profiles.create_index("brand_id", unique=True)
+
     await db.users.create_index("user_id", unique=True)
     await db.users.create_index("email", unique=True)
     await db.user_sessions.create_index("session_token", unique=True)
     await db.audit_log.create_index([("timestamp", -1)])
     await db.content_versions.create_index([("content_type", 1), ("content_id", 1), ("timestamp", -1)])
-    
-    print("Database seeded successfully!")
+
+    print("Database seeded successfully! (No users or admins created by seed script)")
     print(f"Total canonical operators: {len(PIGPEN_OPERATORS)}")
     client.close()
 

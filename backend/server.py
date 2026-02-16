@@ -358,25 +358,21 @@ async def create_session(request: Request, response: Response):
     """Exchange session_id for session_token"""
     body = await request.json()
     session_id = body.get("session_id")
-    
     if not session_id:
         raise HTTPException(status_code=400, detail="session_id required")
-    
     # Call Emergent Auth to get user data
     async with httpx.AsyncClient() as client:
         auth_response = await client.get(
             "https://demobackend.emergentagent.com/auth/v1/env/oauth/session-data",
             headers={"X-Session-ID": session_id}
         )
-    
     if auth_response.status_code != 200:
         raise HTTPException(status_code=401, detail="Invalid session_id")
-    
     user_data = auth_response.json()
-    
     # Check if user exists
     existing_user = await db.users.find_one({"email": user_data["email"]}, {"_id": 0})
-    
+    # Get admin emails from env
+    ADMIN_EMAILS = set(e.strip().lower() for e in os.environ.get("ADMIN_EMAILS", "").split(",") if e.strip())
     if existing_user:
         user_id = existing_user["user_id"]
         # Update user data
@@ -388,10 +384,8 @@ async def create_session(request: Request, response: Response):
     else:
         # Create new user
         user_id = f"user_{uuid.uuid4().hex[:12]}"
-        # First user becomes admin
-        user_count = await db.users.count_documents({})
-        role = "admin" if user_count == 0 else "viewer"
-        
+        email = user_data["email"].strip().lower()
+        role = "admin" if email in ADMIN_EMAILS else "viewer"
         new_user = {
             "user_id": user_id,
             "email": user_data["email"],

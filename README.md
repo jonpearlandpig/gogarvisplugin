@@ -78,7 +78,14 @@ cd frontend
 yarn start
 ```
 
-Visit `http://localhost:3000` - First user to login becomes Admin!
+
+## Admin Setup
+
+Set the `ADMIN_EMAILS` environment variable (comma-separated) with trusted emails.
+Example: `ADMIN_EMAILS=you@domain.com,team@domain.com`
+Only these emails get Admin role on first login. Others default to Viewer.
+
+Visit `http://localhost:3000` and log in. Only users whose email is in `ADMIN_EMAILS` will be assigned Admin role; all others will be Viewer by default.
 
 ---
 
