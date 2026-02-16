@@ -2,6 +2,9 @@ from fastapi import FastAPI, APIRouter, HTTPException, Query, Depends, Request, 
 from fastapi.responses import JSONResponse
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
@@ -23,13 +26,45 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
+
 # Create the main app
 app = FastAPI(title="GoGarvis API")
 api_router = APIRouter(prefix="/api")
 
+# Rate limiter setup
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+
 # LLM Integration
 from emergentintegrations.llm.chat import LlmChat, UserMessage, ImageContent
 chat_sessions = {}
+
+# Secure LLM Proxy Endpoint
+@api_router.post("/llm/proxy")
+@limiter.limit("20/minute")
+async def llm_proxy(request: Request, payload: dict = Body(...)):
+    """Proxy LLM requests to Emergent/OpenAI using backend-only key."""
+    api_key = os.environ.get("EMERGENT_LLM_KEY")
+    if not api_key:
+        raise HTTPException(status_code=500, detail="LLM API key not configured")
+    prompt = payload.get("prompt")
+    context = payload.get("context")
+    if not prompt:
+        raise HTTPException(status_code=400, detail="Prompt required")
+    # Forward to Emergent/OpenAI (example endpoint, adjust as needed)
+    async with httpx.AsyncClient(timeout=30) as client:
+        resp = await client.post(
+            "https://api.openai.com/v1/chat/completions",
+            headers={"Authorization": f"Bearer {api_key}"},
+            json={"model": "gpt-5.2", "messages": [{"role": "user", "content": prompt}], "context": context},
+        )
+    if resp.status_code != 200:
+        raise HTTPException(status_code=resp.status_code, detail=resp.text)
+    data = resp.json()
+    # Strip any keys/metadata
+    return {"response": data.get("choices", [{}])[0].get("message", {}).get("content", "")}
 
 # File upload storage
 UPLOAD_DIR = Path("/app/uploads")
