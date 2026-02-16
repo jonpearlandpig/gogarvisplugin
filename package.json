@@ -1,0 +1,8 @@
+{
+  "name": "gogarvis-monorepo",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "openclaw-skill-garvis-governance"
+  ]
+}
