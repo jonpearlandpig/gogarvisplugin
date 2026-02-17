@@ -1,0 +1,21 @@
+{
+  "name": "gogarvis-adapter-openclaw",
+  "version": "0.1.0",
+  "description": "GARVIS Governance OpenClaw Adapter: exposes core governance, RBAC, and audit as an OpenClaw skill.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint src --ext .ts,.tsx || true"
+  },
+  "keywords": ["openclaw", "garvis", "governance", "rbac", "audit", "plugin"],
+  "author": "Your Name <your@email.com>",
+  "license": "MIT",
+  "dependencies": {
+    "mongodb": "^5.7.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0"
+  }
+}
